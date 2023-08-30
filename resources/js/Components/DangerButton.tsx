@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 
-export default function DangerButton({
+export function DangerButton({
     className = "",
     disabled,
     children,

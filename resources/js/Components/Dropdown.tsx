@@ -6,9 +6,11 @@ import {
     PropsWithChildren,
     Dispatch,
     SetStateAction,
-} from 'react';
-import { Link, InertiaLinkProps } from '@inertiajs/react';
-import { Transition } from '@headlessui/react';
+    ReactNode,
+    ButtonHTMLAttributes,
+} from "react";
+import { Link, InertiaLinkProps } from "@inertiajs/react";
+import { Transition } from "@headlessui/react";
 
 const DropDownContext = createContext<{
     open: boolean;
@@ -20,11 +22,11 @@ const DropDownContext = createContext<{
     toggleOpen: () => {},
 });
 
-const Dropdown = ({ children }: PropsWithChildren) => {
+export const Dropdown = ({ children }: PropsWithChildren) => {
     const [open, setOpen] = useState(false);
 
     const toggleOpen = () => {
-        setOpen(previousState => !previousState);
+        setOpen((previousState) => !previousState);
     };
 
     return (
@@ -54,29 +56,29 @@ const Trigger = ({ children }: PropsWithChildren) => {
 };
 
 const Content = ({
-    align = 'right',
-    width = '48',
-    contentClasses = 'py-1 bg-white',
+    align = "right",
+    width = "48",
+    contentClasses = "py-1 bg-white",
     children,
 }: PropsWithChildren<{
-    align?: 'left' | 'right';
-    width?: '48';
+    align?: "left" | "right";
+    width?: "48";
     contentClasses?: string;
 }>) => {
     const { open, setOpen } = useContext(DropDownContext);
 
-    let alignmentClasses = 'origin-top';
+    let alignmentClasses = "origin-top";
 
-    if (align === 'left') {
-        alignmentClasses = 'origin-top-left left-0';
-    } else if (align === 'right') {
-        alignmentClasses = 'origin-top-right right-0';
+    if (align === "left") {
+        alignmentClasses = "origin-top-left left-0";
+    } else if (align === "right") {
+        alignmentClasses = "origin-top-right right-0";
     }
 
-    let widthClasses = '';
+    let widthClasses = "";
 
-    if (width === '48') {
-        widthClasses = 'w-48';
+    if (width === "48") {
+        widthClasses = "w-48";
     }
 
     return (
@@ -93,7 +95,7 @@ const Content = ({
             >
                 <div
                     className={`absolute z-50 mt-2 
-                    rounded-md shadow-lg 
+                    shadow-lg 
                     ${alignmentClasses} ${widthClasses}`}
                     onClick={() => {
                         setOpen(false);
@@ -101,8 +103,7 @@ const Content = ({
                 >
                     <div
                         className={
-                            'rounded-md ring-1 ring-black ring-opacity-5 ' +
-                            contentClasses
+                            "ring-1 ring-black ring-opacity-5 " + contentClasses
                         }
                     >
                         {children}
@@ -114,7 +115,7 @@ const Content = ({
 };
 
 const DropdownLink = ({
-    className = '',
+    className = "",
     children,
     ...props
 }: InertiaLinkProps) => {
@@ -123,9 +124,12 @@ const DropdownLink = ({
             {...props}
             className={
                 `block w-full px-4 py-2 text-left 
-                text-sm leading-5 text-gray-700 hover:bg-gray-100 
-                focus:outline-none focus:bg-gray-100 
-                transition duration-150 ease-in-out ` + className
+                text-sm leading-5 text-gray-700 
+                hover:bg-green-100 focus:bg-green-100
+                focus:outline-none 
+                transition duration-150 ease-in-out ` +
+                (props.disabled ? "opacity-25 " : "") +
+                className
             }
         >
             {children}
@@ -133,8 +137,26 @@ const DropdownLink = ({
     );
 };
 
+const DropdownButton = ({
+    children,
+    className = "",
+    ...props
+}: ButtonHTMLAttributes<HTMLButtonElement> & { children: ReactNode }) => {
+    return (
+        <button
+            {...props}
+            className={
+                "block w-full text-sm text-left leading-5 text-gray-700 px-4 py-2 hover:bg-green-100 focus:bg-green-100 transition duration-150 ease-in-out " +
+                (props.disabled ? "opacity-25 " : "") +
+                className
+            }
+        >
+            {children}
+        </button>
+    );
+};
+
 Dropdown.Trigger = Trigger;
 Dropdown.Content = Content;
 Dropdown.Link = DropdownLink;
-
-export default Dropdown;
+Dropdown.Button = DropdownButton;

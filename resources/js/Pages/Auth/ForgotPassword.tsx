@@ -1,19 +1,19 @@
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { GuestLayout } from "@/Layouts/GuestLayout";
+import { InputError } from "@/Components/InputError";
+import { PrimaryButton } from "@/Components/PrimaryButton";
+import { TextInput } from "@/Components/TextInput";
+import { Head, useForm } from "@inertiajs/react";
+import { FormEventHandler } from "react";
 
 export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
-        email: '',
+        email: "",
     });
 
-    const submit: FormEventHandler = e => {
+    const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('password.email'));
+        post(route("password.email"));
     };
 
     return (
@@ -40,8 +40,8 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     value={data.email}
                     className="mt-1 block w-full"
                     isFocused={true}
-                    onChange={e => {
-                        setData('email', e.target.value);
+                    onChange={(e) => {
+                        setData("email", e.target.value);
                     }}
                 />
 

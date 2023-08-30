@@ -1,17 +1,13 @@
-import { useRef, useState, FormEventHandler } from 'react';
-import DangerButton from '@/Components/DangerButton';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import Modal from '@/Components/Modal';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
-import { useForm } from '@inertiajs/react';
+import { useRef, useState, FormEventHandler } from "react";
+import { DangerButton } from "@/Components/DangerButton";
+import { InputError } from "@/Components/InputError";
+import { InputLabel } from "@/Components/InputLabel";
+import { Modal } from "@/Components/Modal";
+import { SecondaryButton } from "@/Components/SecondaryButton";
+import { TextInput } from "@/Components/TextInput";
+import { useForm } from "@inertiajs/react";
 
-export default function DeleteUserForm({
-    className = '',
-}: {
-    className?: string;
-}) {
+export function DeleteUserForm({ className = "" }: { className?: string }) {
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
     const passwordInput = useRef<HTMLInputElement>();
 
@@ -23,17 +19,17 @@ export default function DeleteUserForm({
         reset,
         errors,
     } = useForm({
-        password: '',
+        password: "",
     });
 
     const confirmUserDeletion = () => {
         setConfirmingUserDeletion(true);
     };
 
-    const deleteUser: FormEventHandler = e => {
+    const deleteUser: FormEventHandler = (e) => {
         e.preventDefault();
 
-        destroy(route('profile.destroy'), {
+        destroy(route("profile.destroy"), {
             preserveScroll: true,
             onSuccess: () => {
                 closeModal();
@@ -71,7 +67,7 @@ export default function DeleteUserForm({
             </DangerButton>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                <form onSubmit={deleteUser} className="p-6">
+                <form onSubmit={deleteUser}>
                     <h2 className="text-lg font-medium text-gray-900">
                         Are you sure you want to delete your account?
                     </h2>
@@ -96,8 +92,8 @@ export default function DeleteUserForm({
                             name="password"
                             ref={passwordInput}
                             value={data.password}
-                            onChange={e => {
-                                setData('password', e.target.value);
+                            onChange={(e) => {
+                                setData("password", e.target.value);
                             }}
                             className="mt-1 block w-3/4"
                             isFocused

@@ -1,18 +1,18 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, PropsWithChildren } from 'react';
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, HTMLAttributes, PropsWithChildren } from "react";
 
-export default function Modal({
+export const Modal = ({
     children,
     show = false,
-    maxWidth = '2xl',
+    maxWidth = "2xl",
     closeable = true,
     onClose = () => {},
 }: PropsWithChildren<{
     show: boolean;
-    maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+    maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl";
     closeable?: boolean;
     onClose: CallableFunction;
-}>) {
+}>) => {
     const close = () => {
         if (closeable) {
             onClose();
@@ -20,11 +20,11 @@ export default function Modal({
     };
 
     const maxWidthClass = {
-        'sm': 'sm:max-w-sm',
-        'md': 'sm:max-w-md',
-        'lg': 'sm:max-w-lg',
-        'xl': 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
+        sm: "sm:max-w-sm",
+        md: "sm:max-w-md",
+        lg: "sm:max-w-lg",
+        xl: "sm:max-w-xl",
+        "2xl": "sm:max-w-2xl",
     }[maxWidth];
 
     return (
@@ -57,7 +57,7 @@ export default function Modal({
                     leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
                     <Dialog.Panel
-                        className={`mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto ${maxWidthClass}`}
+                        className={`p-6 mb-6 bg-white overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto ${maxWidthClass}`}
                     >
                         {children}
                     </Dialog.Panel>
@@ -65,4 +65,27 @@ export default function Modal({
             </Dialog>
         </Transition>
     );
-}
+};
+
+const Title = ({ children }: PropsWithChildren) => {
+    return (
+        <Dialog.Title className="mb-4 text-lg text-bold text-center">
+            {children}
+        </Dialog.Title>
+    );
+};
+
+const Actions = ({
+    children,
+    className = "",
+    ...props
+}: PropsWithChildren & HTMLAttributes<HTMLDivElement>) => {
+    return (
+        <div {...props} className={"mt-6 flex justify-center " + className}>
+            {children}
+        </div>
+    );
+};
+
+Modal.Title = Title;
+Modal.Actions = Actions;

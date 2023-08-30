@@ -1,12 +1,12 @@
 import { useState, PropsWithChildren, ReactNode } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import Dropdown from "@/Components/Dropdown";
-import NavLink from "@/Components/NavLink";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import { ApplicationLogo } from "@/Components/ApplicationLogo";
+import { Dropdown } from "@/Components/Dropdown";
+import { NavLink } from "@/Components/NavLink";
+import { ResponsiveNavLink } from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
 
-export default function Authenticated({
+export function AuthenticatedLayout({
     user,
     header,
     children,
@@ -32,6 +32,12 @@ export default function Authenticated({
                                     active={route().current("dashboard")}
                                 >
                                     Dashboard
+                                </NavLink>
+                                <NavLink
+                                    href={route("messages.index")}
+                                    active={route().current("messages.index")}
+                                >
+                                    Ziņojumi
                                 </NavLink>
                             </div>
                         </div>
