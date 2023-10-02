@@ -1,40 +1,53 @@
-import { Link, Head } from "@inertiajs/react";
+import { Link, Head, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
+import { SecondaryButton } from "@/Components/SecondaryButton";
+import { GuestLayout } from "@/Layouts/GuestLayout";
+import { LoginForm } from "@/Components/LoginForm";
 
 export default function Welcome({
     auth,
     laravelVersion,
     phpVersion,
-}: PageProps<{ laravelVersion: string; phpVersion: string }>) {
+    canLogin,
+    canRegister,
+    status,
+    canResetPassword,
+}: PageProps<{
+    laravelVersion: string;
+    phpVersion: string;
+    canLogin: boolean;
+    canRegister: boolean;
+    status?: string;
+    canResetPassword: boolean;
+}>) {
+    console.log(canLogin, canRegister);
     return (
         <>
             <Head title="e." />
-            <div className="sm:fixed sm:top-0 sm:right-0 p-4 text-right min-w-full">
-                {auth.user != null ? (
-                    <Link
-                        href={route("dashboard")}
-                        className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                    >
-                        Dashboard
-                    </Link>
-                ) : (
-                    <>
-                        <Link
-                            href={route("login")}
-                            className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                        >
-                            Log in
-                        </Link>
+            <GuestLayout>
+                <LoginForm
+                    canResetPassword={canResetPassword}
+                    status={status}
+                />
 
+                {canResetPassword && (
+                    <div className="mt-4 text-center">
                         <Link
-                            href={route("register")}
-                            className="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            href={route("password.request")}
+                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600"
                         >
-                            Register
+                            Aizmirsta parole?
                         </Link>
-                    </>
+                    </div>
                 )}
-            </div>
+
+                <SecondaryButton
+                    onClick={() => router.get("register")}
+                    className="mt-4 w-full"
+                >
+                    REĢISTRĒTIES
+                </SecondaryButton>
+            </GuestLayout>
         </>
     );
 }

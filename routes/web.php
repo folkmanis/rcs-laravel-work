@@ -25,12 +25,10 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'canResetPassword' => Route::has('password.request'),
+        'status' => session('status'),
     ]);
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['guest']);
 
 Route::resource('messages', MessageController::class)
     ->only(['index', 'store', 'update', 'destroy'])

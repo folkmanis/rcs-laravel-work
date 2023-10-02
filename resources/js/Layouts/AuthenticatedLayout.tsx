@@ -28,12 +28,6 @@ export function AuthenticatedLayout({
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
-                                >
-                                    Dashboard
-                                </NavLink>
-                                <NavLink
                                     href={route("messages.index")}
                                     active={route().current("messages.index")}
                                 >
@@ -43,7 +37,7 @@ export function AuthenticatedLayout({
                                     href={route("photos.index")}
                                     active={route().current("photos.index")}
                                 >
-                                    Fotoattēli
+                                    Foto
                                 </NavLink>
                             </div>
                         </div>
@@ -79,14 +73,14 @@ export function AuthenticatedLayout({
                                         <Dropdown.Link
                                             href={route("profile.edit")}
                                         >
-                                            Profile
+                                            Lietotāja profils
                                         </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route("logout")}
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            Atslēgties!
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
@@ -144,8 +138,8 @@ export function AuthenticatedLayout({
                 >
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            href={route("dashboard")}
-                            active={route().current("dashboard")}
+                            href={route("messages.index")}
+                            active={route().current("messages.index")}
                         >
                             Dashboard
                         </ResponsiveNavLink>
@@ -163,14 +157,14 @@ export function AuthenticatedLayout({
 
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route("profile.edit")}>
-                                Profile
+                                Lietotāja profils
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
                                 href={route("logout")}
                                 as="button"
                             >
-                                Log Out
+                                Atslēgties!
                             </ResponsiveNavLink>
                         </div>
                     </div>

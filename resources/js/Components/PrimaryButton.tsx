@@ -10,7 +10,7 @@ export function PrimaryButton({
         <button
             {...props}
             className={
-                "inline-flex items-center px-4 py-2 bg-green-700 border border-transparent font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-600 focus:bg-green-600 " +
+                "inline-flex items-center justify-center px-4 py-2 bg-green-700 border border-transparent font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-600 focus:bg-green-600 " +
                 "active:bg-green-900 " +
                 "focus:outline-none " +
                 "focus:ring-2 " +
