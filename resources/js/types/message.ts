@@ -1,5 +1,5 @@
 import { User } from "./user";
-
+import { Photo } from "./photo";
 export interface Message {
     id: number;
     text: string;
@@ -7,4 +7,5 @@ export interface Message {
     created_at: string;
     updated_at: string;
     user: User;
+    photos: Pick<Photo, "id">[];
 }

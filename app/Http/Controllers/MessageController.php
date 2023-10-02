@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Requests\StoreMessageRequest;
+use App\Models\Photo;
 
 class MessageController extends Controller
 {
@@ -17,7 +18,9 @@ class MessageController extends Controller
     public function index(): Response
     {
         return Inertia::render('Messages/Index', [
-            'messages' => Message::with('user:id,name')->latest()->get()
+            'messages' => Message::with(['user:id,name'])
+                ->latest()
+                ->get()
         ]);
     }
 

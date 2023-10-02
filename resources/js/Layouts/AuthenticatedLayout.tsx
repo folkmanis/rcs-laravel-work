@@ -39,6 +39,12 @@ export function AuthenticatedLayout({
                                 >
                                     Ziņojumi
                                 </NavLink>
+                                <NavLink
+                                    href={route("photos.index")}
+                                    active={route().current("photos.index")}
+                                >
+                                    Fotoattēli
+                                </NavLink>
                             </div>
                         </div>
 

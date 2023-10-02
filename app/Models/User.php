@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class);
     }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(Photo::class);
+    }
 }

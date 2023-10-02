@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\MessagePhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,10 +30,20 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::resource('/messages', MessageController::class)
+Route::resource('messages', MessageController::class)
     ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth']);
+
+Route::get('/photos/{photo}/thumbnail', [PhotoController::class, 'thumbnail'])
+    ->middleware(['auth']);
+Route::resource('photos', PhotoController::class)
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth']);
+
+Route::singleton('messages.photo', MessagePhotoController::class)
+    ->only(['edit', 'update'])
     ->middleware(['auth']);
 
 Route::middleware('auth')->group(function () {

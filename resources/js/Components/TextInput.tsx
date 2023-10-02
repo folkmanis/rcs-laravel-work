@@ -6,39 +6,42 @@ import {
     InputHTMLAttributes,
 } from "react";
 
-export const TextInput = forwardRef(
-    (
-        {
-            type = "text",
-            className = "",
-            isFocused = false,
-            ...props
-        }: InputHTMLAttributes<HTMLInputElement> & { isFocused?: boolean },
-        ref
-    ) => {
-        const localRef = useRef<HTMLInputElement>(null);
+export interface TextInputHandle {
+    focus: () => void;
+    reset: () => void;
+}
 
-        useImperativeHandle(ref, () => ({
-            focus: () => localRef.current?.focus(),
-        }));
+export const TextInput = forwardRef<
+    TextInputHandle,
+    InputHTMLAttributes<HTMLInputElement> & { isFocused?: boolean }
+>(({ type = "text", className = "", isFocused = false, ...props }, ref) => {
+    const localRef = useRef<HTMLInputElement>(null);
 
-        useEffect(() => {
-            if (isFocused) {
-                localRef.current?.focus();
+    useImperativeHandle(ref, () => ({
+        focus: () => localRef.current?.focus(),
+        reset: () => {
+            if (localRef.current !== null) {
+                localRef.current.value = "";
             }
-        }, [isFocused]);
+        },
+    }));
 
-        return (
-            <input
-                {...props}
-                type={type}
-                className={
-                    // eslint-disable-next-line operator-linebreak
-                    "border-gray-300 focus:border-green-600 focus:ring-green-600 shadow-sm " +
-                    className
-                }
-                ref={localRef}
-            />
-        );
-    }
-);
+    useEffect(() => {
+        if (isFocused) {
+            localRef.current?.focus();
+        }
+    }, [isFocused]);
+
+    return (
+        <input
+            {...props}
+            type={type}
+            className={
+                // eslint-disable-next-line operator-linebreak
+                "border-gray-300 focus:border-green-600 focus:ring-green-600 shadow-sm " +
+                className
+            }
+            ref={localRef}
+        />
+    );
+});
