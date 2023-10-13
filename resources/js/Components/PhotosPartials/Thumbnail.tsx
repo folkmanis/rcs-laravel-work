@@ -1,5 +1,7 @@
 import { Photo } from "@/types";
 import { ThumbnailCheckbox } from "./ThumbnailCheckbox";
+import { useRef } from "react";
+import { Ripple } from "../Ripple";
 
 export type ThumbnailProps = Pick<Photo, "id"> & {
     className?: string;
@@ -16,7 +18,7 @@ export function Thumbnail({
     selected = false,
 }: ThumbnailProps) {
     const backgroundImage = `url("/photos/${id}/thumbnail")`;
-
+    const checkboxRef = useRef<HTMLInputElement>(null);
     return (
         <div
             className={
@@ -24,12 +26,20 @@ export function Thumbnail({
                 className
             }
             style={{ backgroundImage }}
+            onClick={(e) => {
+                checkboxRef.current?.click();
+                e.preventDefault();
+            }}
         >
             {selectable ? (
-                <ThumbnailCheckbox
-                    checked={selected}
-                    onChange={(e) => onSelect(e.target.checked)}
-                />
+                <>
+                    <ThumbnailCheckbox
+                        checked={selected}
+                        onChange={(e) => onSelect(e.target.checked)}
+                        ref={checkboxRef}
+                    />
+                    <Ripple />
+                </>
             ) : null}
         </div>
     );

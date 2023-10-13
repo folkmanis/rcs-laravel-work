@@ -16,7 +16,7 @@ export function AuthenticatedLayout({
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
+            <nav className="bg-white border-b border-gray-100 z-10 fixed w-full">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -170,6 +170,8 @@ export function AuthenticatedLayout({
                     </div>
                 </div>
             </nav>
+
+            <div className="pt-16"></div>
 
             {header && (
                 <header className="bg-white shadow">

@@ -26,7 +26,7 @@ export function Caption({
         setDefaults,
         processing,
     } = useForm({
-        caption,
+        caption: caption ?? "",
     });
     const [editing, setEditing] = useState(false);
 

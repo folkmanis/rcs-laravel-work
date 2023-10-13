@@ -10,6 +10,7 @@ use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Photo extends Model
 {
@@ -18,6 +19,8 @@ class Photo extends Model
     protected $primaryKey = 'id';
     public $incrementing = 'false';
     protected $keyType = 'string';
+
+    protected $touches = ['messages', 'comments'];
 
     protected $fillable = [
         'caption',
@@ -33,6 +36,11 @@ class Photo extends Model
         return $this->belongsToMany(Message::class);
     }
 
+    public function comments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     public static function fromUpload(UploadedFile $file): Photo
     {
 
@@ -42,8 +50,6 @@ class Photo extends Model
         $path = $file->storeAs('photos', $id . '.' . $file->extension());
 
         $image = Image::make(Storage::path($path));
-
-        dd($image->exif());
 
         $caption = $image->exif('Caption');
         if (strlen($caption) > 2048) {

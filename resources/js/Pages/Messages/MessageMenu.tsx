@@ -1,18 +1,19 @@
 import DeleteConfirmationDialog from "@/Components/DeleteConfirmationDialog";
 import { Dropdown } from "@/Components/Dropdown";
+import { IconButton } from "@/Components/IconButton";
 import { router } from "@inertiajs/react";
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 
 export interface MessageMenuProps {
     show: boolean;
-    onSetEditing: (s: boolean) => void;
-    messageId: number;
+    onSetEditing: Dispatch<boolean>;
+    onDelete: Dispatch<void>;
 }
 
 export function MessageMenu({
     show,
     onSetEditing,
-    messageId,
+    onDelete,
 }: MessageMenuProps) {
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
@@ -24,16 +25,9 @@ export function MessageMenu({
             <span className="ml-auto">
                 <Dropdown>
                     <Dropdown.Trigger>
-                        <button>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-4 w-4 text-gray-400"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                            </svg>
-                        </button>
+                        <IconButton mini className="text-gray-400">
+                            more_horiz
+                        </IconButton>
                     </Dropdown.Trigger>
                     <Dropdown.Content>
                         <Dropdown.Button
@@ -42,12 +36,6 @@ export function MessageMenu({
                         >
                             Labot
                         </Dropdown.Button>
-                        <Dropdown.Link
-                            href={route("messages.photo.edit", messageId)}
-                            // href={`/messages/${messageId}/photo/edit`}
-                        >
-                            Pievienot foto
-                        </Dropdown.Link>
                         <Dropdown.Button
                             onClick={() => setDeleteConfirmation(true)}
                         >
@@ -59,9 +47,10 @@ export function MessageMenu({
             <DeleteConfirmationDialog
                 show={deleteConfirmation}
                 onCancel={() => setDeleteConfirmation(false)}
-                onConfirm={() =>
-                    router.delete(route("messages.destroy", messageId))
-                }
+                onConfirm={() => {
+                    setDeleteConfirmation(false);
+                    onDelete();
+                }}
             />
         </>
     );

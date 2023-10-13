@@ -1,6 +1,6 @@
 import { PrimaryButton } from "@/Components/PrimaryButton";
 import { AuthenticatedLayout } from "@/Layouts/AuthenticatedLayout";
-import PhotoList from "@/Pages/Photos/PhotoList";
+import { PhotoList } from "@/Components/PhotoList";
 import { Message, PageProps, Photo } from "@/types";
 import { router } from "@inertiajs/react";
 import { useState } from "react";

@@ -1,5 +1,5 @@
 import { Photo } from "@/types";
-import { PhotoContainer } from "./Partials/PhotoContainer";
+import { PhotoContainer } from "./PhotosPartials/PhotoContainer";
 import { useState, useEffect } from "react";
 
 export interface PhotoListProps {
@@ -12,7 +12,7 @@ export interface PhotoListProps {
     onSelectionChange?: (selection: Photo[]) => void;
 }
 
-export default function PhotoList({
+export function PhotoList({
     photos,
     grid = false,
     className = "",

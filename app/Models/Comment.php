@@ -4,20 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Message extends Model
+class Comment extends Model
 {
     use HasFactory;
 
-    protected $with = ['photos:id'];
-
     protected $fillable = [
         'text',
-        'photos',
     ];
 
     public function user(): BelongsTo
@@ -25,14 +21,9 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function photos(): BelongsToMany
+    public function commentable(): MorphTo
     {
-        return $this->belongsToMany(Photo::class);
-    }
-
-    public function comments(): MorphMany
-    {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphTo();
     }
 
     public function votes(): MorphToMany

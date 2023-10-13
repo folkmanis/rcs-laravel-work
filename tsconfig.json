@@ -7,6 +7,10 @@
         "strict": true,
         "isolatedModules": true,
         "target": "ESNext",
+        "lib": [
+            "DOM",
+            "ESNext",
+          ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,      
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,

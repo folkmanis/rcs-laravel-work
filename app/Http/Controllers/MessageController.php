@@ -8,19 +8,45 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Requests\StoreMessageRequest;
-use App\Models\Photo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        return Inertia::render('Messages/Index', [
-            'messages' => Message::with(['user:id,name'])
+
+        $messages = Message::with([
+            'user:id,name',
+            'comments' => function (MorphMany $query) {
+                $query
+                    ->with([
+                        'user:id,name',
+                        'votes'
+                    ])
+                    ->withSum('votes', 'votables.rating')
+                    ->oldest();
+            },
+            'votes',
+        ])
+            ->withCount('comments')
+            ->withSum('votes', 'votables.rating')
+            ->latest()
+            ->paginate(20);
+
+        $photos = Inertia::lazy(
+            fn () => $request
+                ->user()
+                ->photos()
                 ->latest()
                 ->get()
+        );
+
+        return Inertia::render('Messages/Index', [
+            'messages' => $messages,
+            'photos' => $photos
         ]);
     }
 
@@ -38,7 +64,13 @@ class MessageController extends Controller
     public function store(StoreMessageRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        $request->user()->messages()->create($validated);
+        $message = $request
+            ->user()
+            ->messages()
+            ->create([
+                'text' => $validated['text']
+            ]);
+        $message->photos()->attach($validated['photos']);
         return redirect(route('messages.index'));
     }
 
@@ -63,13 +95,17 @@ class MessageController extends Controller
      */
     public function update(StoreMessageRequest $request, Message $message): RedirectResponse
     {
+
         $this->authorize('update', $message);
 
         $validated = $request->validated();
 
-        $message->update($validated);
+        $message->update([
+            'text' => $validated['text']
+        ]);
+        $message->photos()->sync($validated['photos']);
 
-        return redirect(route('messages.index'));
+        return back();
     }
 
     /**
@@ -82,5 +118,23 @@ class MessageController extends Controller
         $message->delete();
 
         return redirect(route('messages.index'));
+    }
+
+    public function vote(Request $request, Message $message): RedirectResponse
+    {
+
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'rating' => 'required|numeric|integer'
+        ]);
+
+        $message->votes()->detach($user->id);
+
+        if ($validated['rating'] !== 0) {
+            $message->votes()->attach($user->id, ['rating' => $validated['rating']]);
+        }
+
+        return back();
     }
 }

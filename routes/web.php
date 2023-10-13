@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -30,24 +31,30 @@ Route::get('/', function () {
     ]);
 })->middleware(['guest']);
 
-Route::resource('messages', MessageController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth']);
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/photos/{photo}/thumbnail', [PhotoController::class, 'thumbnail'])
-    ->middleware(['auth']);
-Route::resource('photos', PhotoController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth']);
+    Route::post('/messages/{message}/vote', [MessageController::class, 'vote'])
+        ->name('messages.vote');
+    Route::resource('messages', MessageController::class)
+        ->only(['index', 'store', 'update', 'destroy']);
 
-Route::singleton('messages.photo', MessagePhotoController::class)
-    ->only(['edit', 'update'])
-    ->middleware(['auth']);
+    Route::get('/photos/{photo}/thumbnail', [PhotoController::class, 'thumbnail']);
+    Route::resource('photos', PhotoController::class)
+        ->only(['index', 'store', 'update', 'destroy']);
 
-Route::middleware('auth')->group(function () {
+    Route::post('/comments/{comment}/vote', [CommentController::class, 'vote'])
+        ->name('comments.vote');
+    Route::resource('messages.comments', CommentController::class)
+        ->shallow()
+        ->only(['store', 'destroy', 'update']);
+
+    Route::singleton('messages.photo', MessagePhotoController::class)
+        ->only(['edit', 'update']);
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__ . '/auth.php';

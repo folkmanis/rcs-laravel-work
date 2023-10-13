@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Message;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class User extends Authenticatable
 {
@@ -54,5 +56,20 @@ class User extends Authenticatable
     public function photos(): HasMany
     {
         return $this->hasMany(Photo::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function votedMessages(): MorphToMany
+    {
+        return $this->morphedByMany(Message::class, 'votable')->using(Vote::class);
+    }
+
+    public function votedComments(): MorphToMany
+    {
+        return $this->morphedByMany(Comment::class, 'votable')->using(Vote::class);
     }
 }

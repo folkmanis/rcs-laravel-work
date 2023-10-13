@@ -1,11 +1,8 @@
-import { User } from "./user";
+import { Comment } from "./comment";
+import { MessageBase } from "./message-base";
 import { Photo } from "./photo";
-export interface Message {
-    id: number;
-    text: string;
-    user_id: number;
-    created_at: string;
-    updated_at: string;
-    user: User;
+
+export type Message = MessageBase & {
+    comments: Comment[];
     photos: Pick<Photo, "id">[];
-}
+};

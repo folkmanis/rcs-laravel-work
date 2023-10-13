@@ -2,7 +2,8 @@ import { AuthenticatedLayout } from "@/Layouts/AuthenticatedLayout";
 import { PageProps, Photo } from "@/types";
 import { Head } from "@inertiajs/react";
 import { PhotoFileUpload } from "./PhotoFileUpload";
-import PhotoList from "./PhotoList";
+import { PhotoList } from "@/Components/PhotoList";
+import { ScrollToTop } from "@/Components/ScrollToTop";
 
 export default function Index({
     auth,
@@ -15,6 +16,7 @@ export default function Index({
                 <PhotoFileUpload></PhotoFileUpload>
                 <PhotoList photos={photos} className="mt-2" editable />
             </div>
+            <ScrollToTop />
         </AuthenticatedLayout>
     );
 }
