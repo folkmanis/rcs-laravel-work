@@ -1,7 +1,6 @@
 import DeleteConfirmationDialog from "@/Components/DeleteConfirmationDialog";
 import { Dropdown } from "@/Components/Dropdown";
 import { IconButton } from "@/Components/IconButton";
-import { router } from "@inertiajs/react";
 import { Dispatch, useState } from "react";
 
 export interface MessageMenuProps {

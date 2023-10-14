@@ -5,7 +5,6 @@ import { PrimaryButton } from "@/Components/PrimaryButton";
 import { SecondaryButton } from "@/Components/SecondaryButton";
 import { TextArea } from "@/Components/TextArea";
 import { Message, Photo } from "@/types";
-import { MessageBase } from "@/types/message-base";
 import { router, useForm, usePage } from "@inertiajs/react";
 import {
     FormEventHandler,
@@ -16,7 +15,7 @@ import {
 } from "react";
 
 export interface MessageEditProps {
-    message?: MessageBase;
+    message?: Message;
     onClose?: Dispatch<void>;
     page?: number;
     onPhotoSelectionUpdate: Dispatch<string[]>;
