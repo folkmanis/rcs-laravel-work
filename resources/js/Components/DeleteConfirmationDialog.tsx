@@ -15,9 +15,9 @@ export default function DeleteConfirmationDialog({
 }: DeleteConfirmationDialogProps) {
     return (
         <Modal show={show} onClose={onCancel} maxWidth="sm">
-            <Modal.Title>Izdzēst ziņojumu</Modal.Title>
+            <Modal.Title>Izdzēst!</Modal.Title>
 
-            <p className="text-center">Tiešām vēlaties dzēst ziņojumu?</p>
+            <p className="text-center">Tiešām vēlaties dzēst?</p>
             <div>
                 <Modal.Actions>
                     <DangerButton onClick={onConfirm}>Dzēst!</DangerButton>
