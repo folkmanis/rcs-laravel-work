@@ -1,24 +1,14 @@
 import { IconButton } from "@/Components/IconButton";
 import { InputError } from "@/Components/InputError";
-import { PhotoSelectDialog } from "@/Components/PhotoSelectDialog";
-import { PrimaryButton } from "@/Components/PrimaryButton";
-import { SecondaryButton } from "@/Components/SecondaryButton";
 import { TextArea } from "@/Components/TextArea";
-import { Comment, Message, Photo } from "@/types";
-import { router, useForm, usePage } from "@inertiajs/react";
-import {
-    FormEventHandler,
-    HTMLAttributes,
-    Dispatch,
-    useState,
-    useEffect,
-} from "react";
+import { Comment } from "@/types";
+import { useForm } from "@inertiajs/react";
+import { Dispatch, FormEventHandler, HTMLAttributes } from "react";
 
 export interface CommentEditProps {
-    messageId: number;
+    messageId?: number;
     comment?: Comment;
     onClose?: Dispatch<void>;
-    page?: number;
 }
 
 export function CommentEdit({
@@ -46,7 +36,7 @@ export function CommentEdit({
                     preserveScroll: true,
                 }
             );
-        } else {
+        } else if (messageId !== undefined) {
             post(
                 route("messages.comments.store", {
                     message: messageId,
