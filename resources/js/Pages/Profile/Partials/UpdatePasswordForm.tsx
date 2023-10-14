@@ -2,13 +2,13 @@ import { useRef, FormEventHandler } from "react";
 import { InputError } from "@/Components/InputError";
 import { InputLabel } from "@/Components/InputLabel";
 import { PrimaryButton } from "@/Components/PrimaryButton";
-import { TextInput } from "@/Components/TextInput";
+import { TextInput, TextInputHandle } from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
 
 export function UpdatePasswordForm({ className = "" }: { className?: string }) {
-    const passwordInput = useRef<HTMLInputElement>();
-    const currentPasswordInput = useRef<HTMLInputElement>();
+    const passwordInput = useRef<TextInputHandle>(null);
+    const currentPasswordInput = useRef<TextInputHandle>(null);
 
     const {
         data,
@@ -50,12 +50,11 @@ export function UpdatePasswordForm({ className = "" }: { className?: string }) {
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">
-                    Update Password
+                    Paroles maiņa
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Ensure your account is using a long, random password to stay
-                    secure.
+                    Izmantojiet drošu paroli!
                 </p>
             </header>
 
@@ -63,7 +62,7 @@ export function UpdatePasswordForm({ className = "" }: { className?: string }) {
                 <div>
                     <InputLabel
                         htmlFor="current_password"
-                        value="Current Password"
+                        value="Pašreizējā parole"
                     />
 
                     <TextInput
@@ -85,7 +84,7 @@ export function UpdatePasswordForm({ className = "" }: { className?: string }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password" value="New Password" />
+                    <InputLabel htmlFor="password" value="Jaunā parole" />
 
                     <TextInput
                         id="password"
@@ -105,7 +104,7 @@ export function UpdatePasswordForm({ className = "" }: { className?: string }) {
                 <div>
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value="Jaunā parole atkārtoti"
                     />
 
                     <TextInput

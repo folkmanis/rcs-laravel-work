@@ -83,28 +83,29 @@ export function UpdateProfileInformationForm({
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
                         <p className="text-sm mt-2 text-gray-800">
-                            Your email address is unverified.
+                            e-pasta adrese nav apstiprināta.
                             <Link
                                 href={route("verification.send")}
                                 method="post"
                                 as="button"
                                 className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                             >
-                                Click here to re-send the verification email.
+                                Atkārtoti nosūtīt apstiprināšanas e-pastu.
                             </Link>
                         </p>
 
                         {status === "verification-link-sent" && (
                             <div className="mt-2 font-medium text-sm text-green-600">
-                                A new verification link has been sent to your
-                                email address.
+                                Apstiprināšanas saite nosūtīta uz jūsu e-pastu.
                             </div>
                         )}
                     </div>
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <PrimaryButton disabled={processing}>
+                        Saglabāt
+                    </PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
