@@ -6,11 +6,11 @@ import { useMemo, useState } from "react";
 
 export interface VotesProps {
     votesSum: number;
-    route: string;
+    actionRoute: string;
     votes: Vote[];
 }
 
-export function Votes({ votes, votesSum, route }: VotesProps) {
+export function Votes({ votes, votesSum, actionRoute }: VotesProps) {
     const userId = usePage<PageProps>().props.auth.user.id;
     const lastVoteRating = useMemo(
         () => votes.filter((vote) => vote.user_id === userId)[0]?.rating ?? 0,
@@ -21,7 +21,7 @@ export function Votes({ votes, votesSum, route }: VotesProps) {
     const updateVote = (buttonValue: number) => {
         setBusy(true);
         router.post(
-            route,
+            actionRoute,
             { rating: lastVoteRating === buttonValue ? 0 : buttonValue },
             {
                 preserveScroll: true,
