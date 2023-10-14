@@ -1,11 +1,11 @@
 import { PageProps } from "@/types";
 import { Comment } from "@/types/comment";
 import { router, usePage } from "@inertiajs/react";
-import dayjs from "dayjs";
 import { HTMLAttributes, useState } from "react";
 import { MessageMenu } from "./MessageMenu";
 import { Votes } from "./Votes";
 import { CommentEdit } from "./CommentEdit";
+import { CreationTime } from "./CreationTime";
 
 export interface CommentContainerProps {
     comment: Comment;
@@ -32,11 +32,10 @@ export function CommentContainer({
             <div className="p-2 flex text-sm items-baseline">
                 <span className="font-bold">{comment.user.name}</span>
 
-                <span className="ml-2 text-xs italic">
-                    {comment.created_at !== comment.updated_at
-                        ? "labots " + dayjs(comment.updated_at).fromNow()
-                        : dayjs(comment.created_at).fromNow()}
-                </span>
+                <CreationTime
+                    createdAt={comment.created_at}
+                    updatedAt={comment.updated_at}
+                />
                 <MessageMenu
                     show={comment.user_id === auth.user.id && !editing}
                     onSetEditing={() => setEditing(true)}
@@ -47,7 +46,6 @@ export function CommentContainer({
             {editing ? (
                 <CommentEdit
                     comment={comment}
-                    messageId={messageId}
                     className="px-2"
                     onClose={() => setEditing(false)}
                 />
@@ -60,7 +58,7 @@ export function CommentContainer({
                                 +(comment["votes_sum_votablesrating"] ?? 0)
                             }
                             votes={comment.votes}
-                            route={route("comments.vote", {
+                            actionRoute={route("comments.vote", {
                                 comment: comment.id,
                             })}
                         />
