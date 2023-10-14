@@ -1,12 +1,12 @@
-import { Message, PageProps } from "@/types";
-import { CommentContainer } from "./CommentContainer";
-import { NewComment } from "./NewComment";
-import { HTMLAttributes, useState } from "react";
-import { router, usePage } from "@inertiajs/react";
-import dayjs from "dayjs";
-import { MessageMenu } from "./MessageMenu";
 import { Thumbnail } from "@/Components/PhotosPartials/Thumbnail";
+import { Message, PageProps } from "@/types";
+import { router, usePage } from "@inertiajs/react";
+import { HTMLAttributes, useState } from "react";
+import { CommentContainer } from "./CommentContainer";
+import { CreationTime } from "./CreationTime";
 import { MessageEdit } from "./MessageEdit";
+import { MessageMenu } from "./MessageMenu";
+import { NewComment } from "./NewComment";
 import { Votes } from "./Votes";
 
 export interface MessageProps {
@@ -36,11 +36,10 @@ export function MessageContainer({
             <div className="p-2 flex text-sm items-baseline">
                 <span className="font-bold">{message.user.name}</span>
 
-                <span className="ml-2 text-xs italic">
-                    {message.created_at !== message.updated_at
-                        ? "labots " + dayjs(message.updated_at).fromNow()
-                        : dayjs(message.created_at).fromNow()}
-                </span>
+                <CreationTime
+                    createdAt={message.created_at}
+                    updatedAt={message.updated_at}
+                />
                 <MessageMenu
                     show={message.user_id === auth.user.id && !editing}
                     onSetEditing={() => setEditing(true)}
@@ -48,7 +47,7 @@ export function MessageContainer({
                 />
             </div>
 
-            <div className="px-2 flex flex-wrap gap-1">
+            <div className="px-2 pb-2 flex flex-wrap gap-1">
                 {messagePhotos.map((photoId) => {
                     return <Thumbnail key={photoId} id={photoId} />;
                 })}
@@ -70,7 +69,7 @@ export function MessageContainer({
                                 +(message["votes_sum_votablesrating"] ?? 0)
                             }
                             votes={message.votes}
-                            route={route("messages.vote", {
+                            actionRoute={route("messages.vote", {
                                 message: message.id,
                             })}
                         />
@@ -87,7 +86,7 @@ export function MessageContainer({
                         className="border-gray-300 shadow mt-2 bg-gray-50"
                     />
                 ))}
-                <NewComment messageId={message.id} />
+                <NewComment messageId={message.id} className="mt-2" />
             </div>
         </div>
     );
