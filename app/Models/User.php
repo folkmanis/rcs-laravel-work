@@ -65,11 +65,11 @@ class User extends Authenticatable
 
     public function votedMessages(): MorphToMany
     {
-        return $this->morphedByMany(Message::class, 'votable')->using(Vote::class);
+        return $this->morphedByMany(Message::class, 'votable');
     }
 
     public function votedComments(): MorphToMany
     {
-        return $this->morphedByMany(Comment::class, 'votable')->using(Vote::class);
+        return $this->morphedByMany(Comment::class, 'votable');
     }
 }
