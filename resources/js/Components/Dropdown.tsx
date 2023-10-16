@@ -11,6 +11,7 @@ import {
 } from "react";
 import { Link, InertiaLinkProps } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
+import { Ripple } from "./Ripple";
 
 const DropDownContext = createContext<{
     open: boolean;
@@ -123,7 +124,7 @@ const DropdownLink = ({
         <Link
             {...props}
             className={
-                `block w-full px-4 py-2 text-left 
+                `relative block w-full px-4 py-2 text-left 
                 text-sm leading-5 text-gray-700 
                 hover:bg-green-100 focus:bg-green-100
                 focus:outline-none 
@@ -133,6 +134,7 @@ const DropdownLink = ({
             }
         >
             {children}
+            <Ripple />
         </Link>
     );
 };
@@ -146,12 +148,13 @@ const DropdownButton = ({
         <button
             {...props}
             className={
-                "block w-full text-sm text-left leading-5 text-gray-700 px-4 py-2 hover:bg-green-100 focus:bg-green-100 transition duration-150 ease-in-out " +
+                "relative block w-full text-sm text-left leading-5 text-gray-700 px-4 py-2 hover:bg-green-100 focus:bg-green-100 transition duration-150 ease-in-out " +
                 (props.disabled ? "opacity-25 " : "") +
                 className
             }
         >
             {children}
+            <Ripple />
         </button>
     );
 };
