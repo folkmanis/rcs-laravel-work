@@ -77,10 +77,12 @@ export function PhotoSelectDialog({
                 >
                     <Dialog.Panel className="h-full p-2 bg-white shadow lg:rounded-lg">
                         <div className="flex flex-col max-h-full">
-                            <div className="bg-white py-2 flex overflow-hidden flex-shrink-0 border-b-2 border-gray-400">
-                                <span className="my-auto">
-                                    Atzīmēti {selection.length}
-                                </span>
+                            <div className="bg-white py-2 flex overflow-hidden flex-shrink-0  border-gray-300 shadow">
+                                {selection.length > 0 && (
+                                    <span className="my-auto">
+                                        Atzīmēti {selection.length}
+                                    </span>
+                                )}
                                 <IconButton
                                     onClick={() => onSelect(selection)}
                                     className="ml-auto"

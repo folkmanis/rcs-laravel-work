@@ -13,7 +13,7 @@ export default function Index({
         <>
             <Head title="Fotogalerija" />
             <AuthenticatedLayout user={auth.user}>
-                <div className="p-4 max-w-2xl mx-auto sm:p-6 lg:p-8">
+                <div className="p-4 max-w-2xl mx-auto sm:p-6 lg:p-8 pb-16">
                     <PhotoFileUpload></PhotoFileUpload>
                     <PhotoList photos={photos} className="mt-2" editable />
                 </div>

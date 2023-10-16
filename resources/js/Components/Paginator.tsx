@@ -1,10 +1,10 @@
-import { HTMLAttributes, ReactNode } from "react";
-import { IconLink } from "./IconLink";
 import { LengthAwarePaginator } from "@/types/length-aware-paginator";
-import { SecondaryButton } from "./SecondaryButton";
+import { router } from "@inertiajs/react";
+import { ReactNode } from "react";
 import { Dropdown } from "./Dropdown";
 import { IconButton } from "./IconButton";
-import { router } from "@inertiajs/react";
+import { IconLink } from "./IconLink";
+import { SecondaryButton } from "./SecondaryButton";
 
 export type PaginatorProps = Omit<LengthAwarePaginator<any>, "data">;
 

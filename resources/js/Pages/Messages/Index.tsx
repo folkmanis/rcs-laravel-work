@@ -20,10 +20,10 @@ export default function Index({
         <>
             <Head title="Ziņojumi" />
             <AuthenticatedLayout user={auth.user}>
-                <div className="p-4 max-w-2xl mx-auto sm:p-6 lg:p-8">
+                <div className="p-2 max-w-2xl mx-auto sm:p-6 lg:p-8">
                     <MessageEdit />
 
-                    <div className="mt-6">
+                    <div className="mt-6 pb-16">
                         <div className="text-right">
                             <Paginator {...paginator}></Paginator>
                         </div>

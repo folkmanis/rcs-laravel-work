@@ -29,10 +29,12 @@ export function ScrollToTop() {
 
     return (
         <div
-            className={"fixed bottom-6 end-6 transition duration-300 visible"}
+            className={
+                "fixed bottom-6 end-6 transition duration-300 visible opacity-0"
+            }
             style={{
                 visibility: visible ? "visible" : "hidden",
-                opacity: +visible * 1,
+                opacity: +visible * 0.6,
             }}
         >
             <IconButton onClick={toTop}>arrow_upward</IconButton>
