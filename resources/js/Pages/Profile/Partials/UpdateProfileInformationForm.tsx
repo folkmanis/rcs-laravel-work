@@ -34,18 +34,17 @@ export function UpdateProfileInformationForm({
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">
-                    Profile Information
+                    Vispārējā informācija
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Update your account&apos;s profile information and email
-                    address.
+                    Labojiet vispārējo informāciju un e-pasta adresi.
                 </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Vārds" />
 
                     <TextInput
                         id="name"
@@ -63,7 +62,7 @@ export function UpdateProfileInformationForm({
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="e-pasts" />
 
                     <TextInput
                         id="email"
@@ -83,7 +82,7 @@ export function UpdateProfileInformationForm({
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
                         <p className="text-sm mt-2 text-gray-800">
-                            e-pasta adrese nav apstiprināta.
+                            Nepieciešams apstiprināt e-pasta adresi.
                             <Link
                                 href={route("verification.send")}
                                 method="post"
