@@ -1,6 +1,6 @@
 import { MessagePhoto } from "@/types";
 import ReactImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
+import "/resources/css/image-gallery.scss";
 
 export interface MessagePhotoGalleryProps {
     messagePhotos?: MessagePhoto[];
