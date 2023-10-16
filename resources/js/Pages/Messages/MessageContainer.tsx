@@ -1,4 +1,3 @@
-import { Thumbnail } from "@/Components/PhotosPartials/Thumbnail";
 import { Message, PageProps } from "@/types";
 import { router, usePage } from "@inertiajs/react";
 import { HTMLAttributes, useState } from "react";
@@ -6,6 +5,7 @@ import { CommentContainer } from "./CommentContainer";
 import { CreationTime } from "./CreationTime";
 import { MessageEdit } from "./MessageEdit";
 import { MessageMenu } from "./MessageMenu";
+import { MessagePhotoGallery } from "./MessagePhotoGallery";
 import { NewComment } from "./NewComment";
 import { Votes } from "./Votes";
 
@@ -20,9 +20,6 @@ export function MessageContainer({
 }: MessageProps & HTMLAttributes<HTMLDivElement>) {
     const { auth } = usePage<PageProps>().props;
     const [editing, setEditing] = useState(false);
-    const [messagePhotos, setMessagePhotos] = useState<string[]>(
-        message.photos?.map(({ id }) => id) || []
-    );
 
     const onDeleteMessage = () => {
         router.delete(route("messages.destroy", message.id));
@@ -47,21 +44,21 @@ export function MessageContainer({
                 />
             </div>
 
-            <div className="px-2 pb-2 flex flex-wrap gap-1">
-                {messagePhotos.map((photoId) => {
-                    return <Thumbnail key={photoId} id={photoId} />;
-                })}
-            </div>
-
             {editing ? (
                 <MessageEdit
                     className="p-2"
                     message={message}
                     onClose={() => setEditing(false)}
-                    onPhotoSelectionUpdate={setMessagePhotos}
                 />
             ) : (
                 <>
+                    {message.photos.length > 0 && (
+                        <div className="mb-2">
+                            <MessagePhotoGallery
+                                messagePhotos={message.photos}
+                            />
+                        </div>
+                    )}
                     <p className="px-2">{message.text}</p>
                     <div className="p-2">
                         <Votes

@@ -1,9 +1,9 @@
 import { User } from "./user";
 
 export interface Photo {
+    id: string;
     name: string;
     extension: string;
-    id: string;
     caption: string;
     height: number;
     width: number;
@@ -12,3 +12,8 @@ export interface Photo {
     updated_at: string;
     user: User;
 }
+
+export type MessagePhoto = Photo & {
+    url: string;
+    thumbnail_url: string;
+};

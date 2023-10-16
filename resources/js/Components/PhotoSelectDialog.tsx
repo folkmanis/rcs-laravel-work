@@ -1,4 +1,5 @@
 import { Photo } from "@/types";
+import { Dialog, Transition } from "@headlessui/react";
 import {
     Dispatch,
     DispatchWithoutAction,
@@ -6,12 +7,13 @@ import {
     useMemo,
     useState,
 } from "react";
+import { IconButton } from "./IconButton";
 import { PhotoList } from "./PhotoList";
-import { PrimaryButton } from "./PrimaryButton";
-import { SecondaryButton } from "./SecondaryButton";
-import { Dialog, Transition } from "@headlessui/react";
 
-function sortPhotos(selected: string[], photos?: Photo[]): Photo[] | undefined {
+function selectedFirst(
+    selected: string[],
+    photos?: Photo[]
+): Photo[] | undefined {
     if (!photos) {
         return undefined;
     }
@@ -45,7 +47,7 @@ export function PhotoSelectDialog({
     const [selection, setSelection] = useState<string[]>(initialSelection);
     const [showContent, setShowContent] = useState(false);
     const sortedPhotos = useMemo(
-        () => sortPhotos(initialSelection, photos),
+        () => selectedFirst(initialSelection, photos),
         [photos, initialSelection]
     );
     return (
@@ -63,7 +65,7 @@ export function PhotoSelectDialog({
                 />
 
                 <Transition.Child
-                    className="fixed inset-0 p-4"
+                    className="fixed inset-0 p-0 sm:p-2 lg:p-4"
                     enter="ease-out duration-300"
                     enterFrom="opacity-0 sm:scale-50"
                     enterTo="opacity-100 sm:scale-100"
@@ -73,24 +75,21 @@ export function PhotoSelectDialog({
                     afterEnter={() => setShowContent(true)}
                     afterLeave={() => setShowContent(false)}
                 >
-                    <Dialog.Panel className="h-full p-4 bg-white shadow rounded-lg">
+                    <Dialog.Panel className="h-full p-2 bg-white shadow lg:rounded-lg">
                         <div className="flex flex-col max-h-full">
-                            <div className="bg-white p-4 flex overflow-hidden h-[66px] flex-shrink-0">
+                            <div className="bg-white py-2 flex overflow-hidden flex-shrink-0 border-b-2 border-gray-400">
                                 <span className="my-auto">
-                                    Atzīmēti {selection.length} fotoattēli
+                                    Atzīmēti {selection.length}
                                 </span>
-                                <PrimaryButton
+                                <IconButton
                                     onClick={() => onSelect(selection)}
-                                    className="ml-2"
+                                    className="ml-auto"
                                 >
-                                    Saglabāt
-                                </PrimaryButton>
-                                <SecondaryButton
-                                    onClick={onClose}
-                                    className="ml-2"
-                                >
-                                    Atcelt
-                                </SecondaryButton>
+                                    check
+                                </IconButton>
+                                <IconButton onClick={onClose} className="ml-2">
+                                    close
+                                </IconButton>
                             </div>
 
                             <div className="overflow-y-auto">

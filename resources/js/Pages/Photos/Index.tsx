@@ -10,13 +10,15 @@ export default function Index({
     photos,
 }: PageProps<{ photos: Photo[] }>) {
     return (
-        <AuthenticatedLayout user={auth.user}>
-            <Head title="Foto galerija" />
-            <div className="p-4 max-w-2xl mx-auto sm:p-6 lg:p-8">
-                <PhotoFileUpload></PhotoFileUpload>
-                <PhotoList photos={photos} className="mt-2" editable />
-            </div>
-            <ScrollToTop />
-        </AuthenticatedLayout>
+        <>
+            <Head title="Fotogalerija" />
+            <AuthenticatedLayout user={auth.user}>
+                <div className="p-4 max-w-2xl mx-auto sm:p-6 lg:p-8">
+                    <PhotoFileUpload></PhotoFileUpload>
+                    <PhotoList photos={photos} className="mt-2" editable />
+                </div>
+                <ScrollToTop />
+            </AuthenticatedLayout>
+        </>
     );
 }

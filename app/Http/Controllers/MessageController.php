@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Requests\StoreMessageRequest;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Storage;
 
 class MessageController extends Controller
 {
@@ -20,6 +21,7 @@ class MessageController extends Controller
 
         $messages = Message::with([
             'user:id,name',
+            'photos',
             'comments' => function (MorphMany $query) {
                 $query
                     ->with([
@@ -44,9 +46,24 @@ class MessageController extends Controller
                 ->get()
         );
 
+        // $messagePhotos = Inertia::lazy(
+        //     fn () => Message::find($request->query('message_photos'))->photos()->get()
+        //         ->map(function ($photo) {
+        //             $photo['url'] = Storage::url('photos/' . $photo->id . '.' . $photo->extension);
+        //             $photo['thumbnailUrl'] = $photo->thumbnailUrl();
+        //             return $photo;
+        //         })
+        // );
+
+        // $message = Inertia::lazy(
+        //     fn () => $request->user()->messages()->find($request->query('message'))
+        // );
+
         return Inertia::render('Messages/Index', [
             'messages' => $messages,
-            'photos' => $photos
+            'photos' => $photos,
+            // 'message' => $message,
+            // 'messagePhotos' => $messagePhotos
         ]);
     }
 

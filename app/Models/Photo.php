@@ -10,7 +10,7 @@ use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Photo extends Model
 {
@@ -20,11 +20,13 @@ class Photo extends Model
     public $incrementing = 'false';
     protected $keyType = 'string';
 
-    protected $touches = ['messages', 'comments'];
+    protected $touches = ['messages'];
 
     protected $fillable = [
         'caption',
     ];
+
+    protected $appends = ['url', 'thumbnail_url'];
 
     public function user(): BelongsTo
     {
@@ -36,9 +38,18 @@ class Photo extends Model
         return $this->belongsToMany(Message::class);
     }
 
-    public function comments(): MorphMany
+    public function thumbnailUrl(): Attribute
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return new Attribute(
+            get: fn () => '/photos/' . $this->id . '/thumbnail'
+        );
+    }
+
+    protected function url(): Attribute
+    {
+        return new Attribute(
+            get: fn () => Storage::url('photos/' . $this->id . '.' . $this->extension)
+        );
     }
 
     public static function fromUpload(UploadedFile $file): Photo

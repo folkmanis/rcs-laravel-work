@@ -13,7 +13,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $with = ['photos:id'];
+    // protected $with = ['photos:id'];
 
     protected $fillable = [
         'text',

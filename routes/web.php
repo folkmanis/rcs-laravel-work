@@ -48,9 +48,6 @@ Route::middleware(['auth'])->group(function () {
         ->shallow()
         ->only(['store', 'destroy', 'update']);
 
-    Route::singleton('messages.photo', MessagePhotoController::class)
-        ->only(['edit', 'update']);
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
