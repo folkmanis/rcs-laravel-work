@@ -1,16 +1,21 @@
 import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 import { Ripple } from "./Ripple";
 
+export interface IconButtonProps {
+    filled?: boolean;
+    mini?: boolean;
+    primary?: boolean;
+}
+
 export function IconButton({
     children,
     className = "",
-    filled,
-    mini,
+    filled = false,
+    mini = false,
+    primary = false,
     ...props
-}: PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> & {
-    filled?: boolean;
-    mini?: boolean;
-}) {
+}: PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> &
+    IconButtonProps) {
     const style = filled
         ? {
               fontVariationSettings:
@@ -22,8 +27,7 @@ export function IconButton({
         <button
             className={
                 `relative inline-flex items-center justify-center 
-                bg-white text-gray-700 
-                shadow-sm hover:bg-gray-50 
+                shadow-sm 
                 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 
                 disabled:opacity-25 
                 transition ease-in-out duration-150 
@@ -32,6 +36,11 @@ export function IconButton({
                     !mini
                         ? "w-[34px] h-[34px] border border-gray-300  "
                         : "w-[24px] h-[24px] "
+                }
+                ${
+                    primary
+                        ? "bg-green-700 text-white hover:bg-green-600 "
+                        : "bg-white text-gray-700 hover:bg-gray-50 "
                 }` + className
             }
             {...props}
