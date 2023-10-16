@@ -52,7 +52,7 @@ class PhotoController extends Controller
     public function thumbnail(Photo $photo): StreamedResponse
     {
         $name = 'thumbnail-' . $photo->name;
-        $path = $this->getThumbnailPath($photo);
+        $path = $photo->thumbnail_path;
         if (!Storage::fileExists($path)) {
             $this->createThumbnail($photo);
         }
@@ -101,16 +101,11 @@ class PhotoController extends Controller
 
         $photo->delete();
 
-        Storage::delete($this->getThumbnailPath($photo));
+        Storage::delete($photo->thumbnail_path);
 
         Storage::delete("photos/{$photo->id}.{$photo->extension}");
 
         return redirect(route('photos.index'));
-    }
-
-    private function getThumbnailPath(Photo $photo): string
-    {
-        return 'photos/thumbnails/' . $photo->id . '.' . $photo->extension;
     }
 
     private function createThumbnail(Photo $photo)
@@ -121,6 +116,6 @@ class PhotoController extends Controller
             ->fit(180, 120, function ($constraint) {
                 $constraint->upsize();
             })
-            ->save(Storage::path($this->getThumbnailPath($photo)));
+            ->save(Storage::path($photo->thumbnail_path));
     }
 }

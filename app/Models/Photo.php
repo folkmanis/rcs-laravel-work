@@ -22,9 +22,7 @@ class Photo extends Model
 
     protected $touches = ['messages'];
 
-    protected $fillable = [
-        'caption',
-    ];
+    protected $fillable = ['caption'];
 
     protected $appends = ['url', 'thumbnail_url'];
 
@@ -45,10 +43,17 @@ class Photo extends Model
         );
     }
 
-    protected function url(): Attribute
+    public function url(): Attribute
     {
         return new Attribute(
             get: fn () => Storage::url('photos/' . $this->id . '.' . $this->extension)
+        );
+    }
+
+    public function thumbnailPath(): Attribute
+    {
+        return new Attribute(
+            get: fn () => 'photos/thumbnails/' . $this->id . '.' . $this->extension
         );
     }
 
