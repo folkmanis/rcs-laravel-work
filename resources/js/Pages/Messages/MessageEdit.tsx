@@ -27,7 +27,7 @@ export function MessageEdit({
     const [photoSelectorState, setPhotoSelectorState] = useState(false);
     const photos = usePage<PageProps<{ photos?: Photo[] }>>().props.photos;
 
-    const { data, setData, patch, post, reset, errors, clearErrors } =
+    const { data, setData, patch, post, reset, errors, clearErrors, isDirty } =
         useForm<MessageForm>({
             text: message?.text || "",
             photos: message?.photos.map(({ id }) => id) || [],
@@ -82,7 +82,9 @@ export function MessageEdit({
                 />
                 <InputError message={errors.text} className="mt-2" />
                 <div className="mt-4 flex gap-2">
-                    <PrimaryButton>
+                    <PrimaryButton
+                        disabled={isDirty === false || data.text.length === 0}
+                    >
                         {message ? "Saglabāt" : "Nosūtīt"}
                     </PrimaryButton>
                     <IconButton type="button" onClick={onOpenPhotoSelection}>
