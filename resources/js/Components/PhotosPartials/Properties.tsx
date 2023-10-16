@@ -1,6 +1,7 @@
 import { Photo } from "@/types";
 import { Link } from "@inertiajs/react";
 import { Caption } from "./Caption";
+import { IconLink } from "../IconLink";
 
 interface PropertiesProps {
     photo: Photo;
@@ -26,16 +27,14 @@ export function Properties({
             <Caption photo={photo} editable={editable} />
             {editable ? (
                 <div className="mt-auto">
-                    <Link
+                    <IconLink
                         href={route("photos.destroy", photo.id)}
                         method="delete"
                         as="button"
-                        className="w-[24px] h-[24px] bg-white hover:bg-green-200 text-gray-700  shadow-sm rounded-full disabled:opacity-25 transition ease-in-out duration-150"
+                        mini
                     >
-                        <span className="material-symbols-outlined text-base">
-                            delete
-                        </span>
-                    </Link>
+                        delete
+                    </IconLink>
                 </div>
             ) : null}
         </div>
