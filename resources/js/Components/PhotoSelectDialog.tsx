@@ -10,24 +10,10 @@ import {
 import { IconButton } from "./IconButton";
 import { PhotoList } from "./PhotoList";
 
-function selectedFirst(
-    selected: string[],
-    photos?: Photo[]
-): Photo[] | undefined {
-    if (!photos) {
-        return undefined;
-    }
-    const exists: Photo[] = [];
-    const notExists: Photo[] = [];
-    photos.forEach((photo) => {
-        if (selected.includes(photo.id)) {
-            exists.push(photo);
-        } else {
-            notExists.push(photo);
-        }
-    });
-    return exists.concat(notExists);
-}
+const sortSelectedPhotosFirst = (selected: string[], photos?: Photo[]) =>
+    photos?.toSorted(
+        (a, b) => +selected.includes(b.id) - +selected.includes(a.id)
+    );
 
 export interface PhotoSelectDialogProps {
     show: boolean;
@@ -47,7 +33,7 @@ export function PhotoSelectDialog({
     const [selection, setSelection] = useState<string[]>(initialSelection);
     const [showContent, setShowContent] = useState(false);
     const sortedPhotos = useMemo(
-        () => selectedFirst(initialSelection, photos),
+        () => sortSelectedPhotosFirst(initialSelection, photos),
         [photos, initialSelection]
     );
     return (
@@ -86,6 +72,7 @@ export function PhotoSelectDialog({
                                 <IconButton
                                     onClick={() => onSelect(selection)}
                                     className="ml-auto"
+                                    primary
                                 >
                                     check
                                 </IconButton>
