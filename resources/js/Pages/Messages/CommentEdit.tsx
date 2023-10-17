@@ -17,7 +17,16 @@ export function CommentEdit({
     onClose = () => {},
     ...props
 }: CommentEditProps & HTMLAttributes<HTMLDivElement>) {
-    const { data, setData, patch, post, reset, errors, clearErrors } = useForm({
+    const {
+        data,
+        setData,
+        patch,
+        post,
+        reset,
+        errors,
+        clearErrors,
+        processing,
+    } = useForm({
         text: comment?.text || "",
     });
 
@@ -59,7 +68,7 @@ export function CommentEdit({
                         name="text"
                         rows={1}
                         onChange={(e) => setData("text", e.target.value)}
-                        className="w-full"
+                        className="w-full leading-4 p-1"
                     />
                     <InputError message={errors.text} className="mt-2" />
                 </div>
@@ -67,7 +76,7 @@ export function CommentEdit({
                     <IconButton
                         className="flex-0"
                         mini
-                        disabled={!data.text}
+                        disabled={processing}
                         onClick={(e) => {
                             e.preventDefault();
                             reset();
@@ -78,7 +87,11 @@ export function CommentEdit({
                         cancel
                     </IconButton>
                 )}
-                <IconButton className="flex-0" mini disabled={!data.text}>
+                <IconButton
+                    className="flex-0"
+                    mini
+                    disabled={data.text.length === 0 || processing}
+                >
                     send
                 </IconButton>
             </form>
