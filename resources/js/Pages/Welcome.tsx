@@ -4,23 +4,19 @@ import { SecondaryButton } from "@/Components/SecondaryButton";
 import { GuestLayout } from "@/Layouts/GuestLayout";
 import { LoginForm } from "@/Components/LoginForm";
 
-export default function Welcome({
-    auth,
-    laravelVersion,
-    phpVersion,
-    canLogin,
-    canRegister,
-    status,
-    canResetPassword,
-}: PageProps<{
+export type WelcomePageProps = {
     laravelVersion: string;
     phpVersion: string;
     canLogin: boolean;
     canRegister: boolean;
     status?: string;
     canResetPassword: boolean;
-}>) {
-    console.log(canLogin, canRegister);
+};
+
+export default function Welcome({
+    status,
+    canResetPassword,
+}: PageProps<WelcomePageProps>) {
     return (
         <>
             <Head title="e." />
