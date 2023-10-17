@@ -6,8 +6,8 @@ import { CreationTime } from "./CreationTime";
 import { MessageEdit } from "./MessageEdit";
 import { MessageMenu } from "./MessageMenu";
 import { MessagePhotoGallery } from "./MessagePhotoGallery";
-import { NewComment } from "./NewComment";
 import { Votes } from "./Votes";
+import { CommentEdit } from "./CommentEdit";
 
 export interface MessageProps {
     message: Message;
@@ -83,7 +83,7 @@ export function MessageContainer({
                         className="border-gray-300 shadow mt-2 bg-gray-50"
                     />
                 ))}
-                <NewComment messageId={message.id} className="mt-2" />
+                <CommentEdit className="mt-2" messageId={message.id} />
             </div>
         </div>
     );
