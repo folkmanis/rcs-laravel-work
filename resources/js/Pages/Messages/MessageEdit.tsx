@@ -27,11 +27,20 @@ export function MessageEdit({
     const [photoSelectorState, setPhotoSelectorState] = useState(false);
     const photos = usePage<PageProps<{ photos?: Photo[] }>>().props.photos;
 
-    const { data, setData, patch, post, reset, errors, clearErrors, isDirty } =
-        useForm<MessageForm>({
-            text: message?.text || "",
-            photos: message?.photos.map(({ id }) => id) || [],
-        });
+    const {
+        data,
+        setData,
+        patch,
+        post,
+        reset,
+        errors,
+        clearErrors,
+        isDirty,
+        processing,
+    } = useForm<MessageForm>({
+        text: message?.text || "",
+        photos: message?.photos.map(({ id }) => id) || [],
+    });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -83,11 +92,19 @@ export function MessageEdit({
                 <InputError message={errors.text} className="mt-2" />
                 <div className="mt-4 flex gap-2">
                     <PrimaryButton
-                        disabled={isDirty === false || data.text.length === 0}
+                        disabled={
+                            isDirty === false ||
+                            data.text.length === 0 ||
+                            processing
+                        }
                     >
                         {message ? "Saglabāt" : "Nosūtīt"}
                     </PrimaryButton>
-                    <IconButton type="button" onClick={onOpenPhotoSelection}>
+                    <IconButton
+                        type="button"
+                        onClick={onOpenPhotoSelection}
+                        disabled={processing}
+                    >
                         image
                     </IconButton>
                     {message && (
@@ -98,6 +115,7 @@ export function MessageEdit({
                                 reset();
                                 clearErrors();
                             }}
+                            disabled={processing}
                         >
                             Atcelt
                         </SecondaryButton>
