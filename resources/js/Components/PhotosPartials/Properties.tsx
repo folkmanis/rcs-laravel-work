@@ -1,7 +1,6 @@
 import { Photo } from "@/types";
-import { Link } from "@inertiajs/react";
 import { Caption } from "./Caption";
-import { IconLink } from "../IconLink";
+import { IconButton } from "../IconButton";
 
 interface PropertiesProps {
     photo: Photo;
@@ -27,14 +26,14 @@ export function Properties({
             <Caption photo={photo} editable={editable} />
             {editable ? (
                 <div className="mt-auto">
-                    <IconLink
+                    <IconButton
                         href={route("photos.destroy", photo.id)}
                         method="delete"
                         as="button"
                         mini
                     >
                         delete
-                    </IconLink>
+                    </IconButton>
                 </div>
             ) : null}
         </div>

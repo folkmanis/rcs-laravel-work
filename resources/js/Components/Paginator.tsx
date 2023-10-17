@@ -3,7 +3,6 @@ import { router } from "@inertiajs/react";
 import { ReactNode } from "react";
 import { Dropdown } from "./Dropdown";
 import { IconButton } from "./IconButton";
-import { IconLink } from "./IconLink";
 import { SecondaryButton } from "./SecondaryButton";
 
 export type PaginatorProps = Omit<LengthAwarePaginator<any>, "data">;
@@ -21,34 +20,34 @@ export function Paginator(props: PaginatorProps) {
         <div className={`inline-flex gap-1 items-center`}>
             <IconButton onClick={() => router.reload()}>refresh</IconButton>
             <PaginatorMenu {...props} />
-            <IconLink
+            <IconButton
                 href={first_page_url}
                 disabled={current_page === 1}
                 as="button"
             >
                 first_page
-            </IconLink>
-            <IconLink
+            </IconButton>
+            <IconButton
                 href={prev_page_url || ""}
                 disabled={prev_page_url == null}
                 as="button"
             >
                 navigate_before
-            </IconLink>
-            <IconLink
+            </IconButton>
+            <IconButton
                 href={next_page_url || ""}
                 disabled={next_page_url == null}
                 as="button"
             >
                 navigate_next
-            </IconLink>
-            <IconLink
+            </IconButton>
+            <IconButton
                 href={last_page_url}
                 disabled={current_page === last_page}
                 as="button"
             >
                 last_page
-            </IconLink>
+            </IconButton>
         </div>
     );
 }
