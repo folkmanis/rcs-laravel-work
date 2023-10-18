@@ -11,6 +11,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Photo extends Model
 {
@@ -36,25 +37,44 @@ class Photo extends Model
         return $this->belongsToMany(Message::class);
     }
 
-    public function thumbnailUrl(): Attribute
+    protected function thumbnailUrl(): Attribute
     {
         return new Attribute(
             get: fn () => '/photos/' . $this->id . '/thumbnail'
         );
     }
 
-    public function url(): Attribute
+    protected function url(): Attribute
     {
         return new Attribute(
             get: fn () => Storage::url('photos/' . $this->id . '.' . $this->extension)
         );
     }
 
-    public function thumbnailPath(): Attribute
+    protected function thumbnailPath(): Attribute
     {
         return new Attribute(
             get: fn () => 'photos/thumbnails/' . $this->id . '.' . $this->extension
         );
+    }
+
+    protected function path(): Attribute
+    {
+        return new Attribute(
+            get: fn () => 'photos/' . $this->id . '.' . $this->extension
+        );
+    }
+
+    public function createThumbnailIfNotExists()
+    {
+        if (!Storage::fileExists($this->thumbnail_path)) {
+            $image = Image::make(Storage::path($this->path));
+            $image
+                ->fit(180, 120, function ($constraint) {
+                    $constraint->upsize();
+                })
+                ->save(Storage::path($this->thumbnail_path));
+        }
     }
 
     public static function fromUpload(UploadedFile $file): Photo

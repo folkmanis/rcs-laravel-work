@@ -51,12 +51,9 @@ class PhotoController extends Controller
 
     public function thumbnail(Photo $photo): StreamedResponse
     {
+        $photo->createThumbnailIfNotExists();
         $name = 'thumbnail-' . $photo->name;
-        $path = $photo->thumbnail_path;
-        if (!Storage::fileExists($path)) {
-            $this->createThumbnail($photo);
-        }
-        return Storage::download($path, $name);
+        return Storage::download($photo->thumbnail_path, $name);
     }
 
     /**
@@ -106,16 +103,5 @@ class PhotoController extends Controller
         Storage::delete("photos/{$photo->id}.{$photo->extension}");
 
         return redirect(route('photos.index'));
-    }
-
-    private function createThumbnail(Photo $photo)
-    {
-        $path = "photos/{$photo->id}.{$photo->extension}";
-        $image = Image::make(Storage::path($path));
-        $image
-            ->fit(180, 120, function ($constraint) {
-                $constraint->upsize();
-            })
-            ->save(Storage::path($photo->thumbnail_path));
     }
 }
