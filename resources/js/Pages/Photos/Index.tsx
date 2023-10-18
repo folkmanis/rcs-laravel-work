@@ -1,7 +1,7 @@
 import { AuthenticatedLayout } from "@/Layouts/AuthenticatedLayout";
 import { PageProps, Photo } from "@/types";
 import { Head } from "@inertiajs/react";
-import { PhotoFileUpload } from "./PhotoFileUpload";
+import { PhotoFileUpload } from "./Partials/PhotoFileUpload";
 import { PhotoList } from "@/Components/PhotoList";
 import { ScrollToTop } from "@/Components/ScrollToTop";
 

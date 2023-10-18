@@ -5,7 +5,6 @@ export * from "./message";
 export * from "./photo";
 export * from "./comment";
 export * from "./vote";
-export * from "./message-photo";
 export * from "./length-aware-paginator";
 
 export type PageProps<

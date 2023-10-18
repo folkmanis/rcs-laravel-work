@@ -3,8 +3,8 @@ import { ScrollToTop } from "@/Components/ScrollToTop";
 import { AuthenticatedLayout } from "@/Layouts/AuthenticatedLayout";
 import { LengthAwarePaginator, Message, PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
-import { MessageContainer } from "./MessageContainer";
-import { MessageEdit } from "./MessageEdit";
+import { MessageContainer } from "./Partials/MessageContainer";
+import { MessageEdit } from "./Partials/MessageEdit";
 
 export type MessageIndexProps = {
     messages: LengthAwarePaginator<Message>;
