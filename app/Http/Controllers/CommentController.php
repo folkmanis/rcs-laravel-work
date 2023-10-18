@@ -60,7 +60,7 @@ class CommentController extends Controller
         $user = $request->user();
 
         $validated = $request->validate([
-            'rating' => 'required|numeric|integer'
+            'rating' => 'required|numeric|integer|max:1|min:-1'
         ]);
 
         $comment->votes()->detach($user->id);

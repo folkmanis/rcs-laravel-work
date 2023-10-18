@@ -46,24 +46,9 @@ class MessageController extends Controller
                 ->get()
         );
 
-        // $messagePhotos = Inertia::lazy(
-        //     fn () => Message::find($request->query('message_photos'))->photos()->get()
-        //         ->map(function ($photo) {
-        //             $photo['url'] = Storage::url('photos/' . $photo->id . '.' . $photo->extension);
-        //             $photo['thumbnailUrl'] = $photo->thumbnailUrl();
-        //             return $photo;
-        //         })
-        // );
-
-        // $message = Inertia::lazy(
-        //     fn () => $request->user()->messages()->find($request->query('message'))
-        // );
-
         return Inertia::render('Messages/Index', [
             'messages' => $messages,
             'photos' => $photos,
-            // 'message' => $message,
-            // 'messagePhotos' => $messagePhotos
         ]);
     }
 
@@ -143,7 +128,7 @@ class MessageController extends Controller
         $user = $request->user();
 
         $validated = $request->validate([
-            'rating' => 'required|numeric|integer'
+            'rating' => 'required|numeric|integer|max:1|min:-1'
         ]);
 
         $message->votes()->detach($user->id);
