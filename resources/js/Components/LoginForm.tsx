@@ -6,13 +6,7 @@ import { InputLabel } from "./InputLabel";
 import { PrimaryButton } from "./PrimaryButton";
 import { TextInput } from "./TextInput";
 
-export function LoginForm({
-    status,
-    canResetPassword,
-}: {
-    status?: string;
-    canResetPassword: boolean;
-}) {
+export function LoginForm({ canResetPassword }: { canResetPassword: boolean }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         username: "",
         password: "",
@@ -33,12 +27,6 @@ export function LoginForm({
 
     return (
         <>
-            {status && (
-                <div className="mb-4 font-medium text-sm text-green-600">
-                    {status}
-                </div>
-            )}
-
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="username" value="Lietotājvārds" />

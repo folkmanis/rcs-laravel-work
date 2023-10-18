@@ -9,22 +9,17 @@ export type WelcomePageProps = {
     phpVersion: string;
     canLogin: boolean;
     canRegister: boolean;
-    status?: string;
     canResetPassword: boolean;
 };
 
 export default function Welcome({
-    status,
     canResetPassword,
 }: PageProps<WelcomePageProps>) {
     return (
         <>
             <Head title="e." />
             <GuestLayout>
-                <LoginForm
-                    canResetPassword={canResetPassword}
-                    status={status}
-                />
+                <LoginForm canResetPassword={canResetPassword} />
 
                 {canResetPassword && (
                     <div className="mt-4 text-center">
