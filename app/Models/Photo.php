@@ -11,7 +11,6 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Photo extends Model
 {
