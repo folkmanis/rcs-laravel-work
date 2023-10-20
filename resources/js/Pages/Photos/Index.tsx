@@ -8,13 +8,14 @@ import { ScrollToTop } from "@/Components/ScrollToTop";
 export default function Index({
     auth,
     photos,
-}: PageProps<{ photos: Photo[] }>) {
+    maxWidth,
+}: PageProps<{ photos: Photo[]; maxWidth: number }>) {
     return (
         <>
             <Head title="Fotogalerija" />
             <AuthenticatedLayout user={auth.user}>
                 <div className="p-4 max-w-2xl mx-auto sm:p-6 lg:p-8 pb-16">
-                    <PhotoFileUpload></PhotoFileUpload>
+                    <PhotoFileUpload maxWidth={maxWidth} />
                     <PhotoList photos={photos} className="mt-2" editable />
                 </div>
                 <ScrollToTop />

@@ -21,6 +21,7 @@ class PhotoController extends Controller
     {
         return Inertia::render('Photos/Index', [
             'photos' => $request->user()->photos()->latest()->get(),
+            'maxWidth' => config('photo.max_width'),
         ]);
     }
 

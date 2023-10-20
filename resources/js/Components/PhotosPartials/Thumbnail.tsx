@@ -3,7 +3,9 @@ import { ThumbnailCheckbox } from "./ThumbnailCheckbox";
 import { useRef } from "react";
 import { Ripple } from "../Ripple";
 
-export type ThumbnailProps = Pick<Photo, "id"> & {
+export type ThumbnailProps = {
+    id?: string;
+    url?: string;
     className?: string;
     selectable?: boolean;
     onSelect?: (s: boolean) => void;
@@ -11,13 +13,14 @@ export type ThumbnailProps = Pick<Photo, "id"> & {
 };
 
 export function Thumbnail({
-    id,
+    id = "",
+    url,
     className = "",
     selectable = false,
     onSelect = () => {},
     selected = false,
 }: ThumbnailProps) {
-    const backgroundImage = `url("/photos/${id}/thumbnail")`;
+    const backgroundImage = url || `url("/photos/${id}/thumbnail")`;
     const checkboxRef = useRef<HTMLInputElement>(null);
     return (
         <div
